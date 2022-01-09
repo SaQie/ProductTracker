@@ -1,0 +1,161 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns="http://www.w3.org/1999/html" lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Tracker</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"></script>
+    <link href="../static/styles/home_styles.css" th:href="@{/styles/home_styles.css}" rel="stylesheet">
+    <link href="../static/styles/animation_styles.css" th:href="@{/styles/animation_styles.css}" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@700&display=swap" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar fixed-top navbar-expand-lg" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand offset-1 text-uppercase slide-in-left" href="/">product_tracker</a>
+        <button class="navbar-toggler text-uppercase font-weight-bold text-white rounded bg-dark" type="button"
+                data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+                aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav ms-auto me-3">
+                <li class="nav-item mx-0 mx-lg-1">
+                    <a class="nav-link py-3 px-0 px-lg-3 text-uppercase slide-in-right" href="/">O aplikacji</a>
+                </li>
+                <th:block sec:authorize="isAnonymous()">
+                    <li class="nav-item mx-0 mx-lg-1">
+                        <a class="nav-link py-3 px-0 px-lg-3 text-uppercase slide-in-right" href="/login">Logowanie</a>
+                    </li>
+                    <li class="nav-item mx-0 mx-lg-1">
+                        <a class="nav-link py-3 px-0 px-lg-3 text-uppercase slide-in-right"
+                           href="/register">Rejestracja</a>
+                    </li>
+                </th:block>
+                <th:block sec:authorize="isAuthenticated()">
+                    <li class="nav-item mx-0 mx-lg-1">
+                        <a class="nav-link py-3 px-0 px-lg-3 text-uppercase slide-in-right" href="/menu">Menu</a>
+                    </li>
+                    <li class="nav-item mx-0 mx-lg-1">
+                        <a class="nav-link py-3 px-0 px-lg-3 text-uppercase slide-in-right" href="/logout">Wyloguj
+                            się</a>
+                    </li>
+                </th:block>
+            </ul>
+        </div>
+    </div>
+</nav>
+<header class="bg-primary text-white text-center">
+    <div class="container align-items-center">
+        <div class="row justify-content-center">
+            <div class="col-12 p-5 mt-5 ">
+                <img class="ms-5 mb-2 heartbeat" src="https://i.imgur.com/V8c4NEr.png" width="180px" height="180px">
+            </div>
+            <div class="col-8 p-3 bg-light rounded-circle slide-in-bck-center" id="mainHeader">
+                <h1 class="text-uppercase mb-0 main-text">Product_Tracker</h1>
+            </div>
+            <div class="col-12 p-4 mt-4">
+                <div class="star-line slide-in-bck-center"> ——— ★ ———</div>
+            </div>
+            <div class="col-8 col-md-12 mt-4 mb-5 p-4 pb-5 text-wrap">
+                <h3 class="text-uppercase slide-in-bck-center">śledz ceny wybranych przez siebie produktów</h3>
+            </div>
+        </div>
+    </div>
+</header>
+<div class="container align-items-center">
+    <div class="row justify-content-center text-center">
+        <div class="col-6 mt-3">
+            <h1 class="mt-4 text-uppercase text-black main-text">O aplikacji</h1>
+        </div>
+        <div class="col-12 mt-2">
+            <div class="star-line fade-in-fwd">——— ★ ———</div>
+        </div>
+    </div>
+    <div class="row mt-4 justify-content-center text-center">
+        <div class="col-12 col-lg-5 p-2  text-wrap">
+            <h3 class="about">Aplikacja została stworzona w celu śledzenia cen na portalach takich jak Media Expert,
+                Media Markt, Morele. Aby korzystać z aplikacji musisz się zarejestrować w celu uzyskania dostępu do
+                serwisu, nie powinno Ci to zając dłużej niż kilka chwil</h3>
+        </div>
+        <div class="col-12 col-lg-5 p-2  text-wrap">
+            <h3 class="about">Po rejestracji możesz dodać wybrane produkty do swojego konta, zostanie spisana ich cena
+                na aktualny dzień, możesz tu wrócić codziennie i odświeżać ceny, aby sprawdzić jak kształtuje się
+                historia cen danego produktu po ich dodaniu</h3>
+        </div>
+    </div>
+    <div class="row mt-4 justify-content-center text-center">
+        <div class="col-6 mt-4 p-3 rounded-3 align-middle mb-5 ">
+            <a href="/register" class="about-button btn btn-outline-dark fw-bold">Zarejestruj się</a>
+        </div>
+    </div>
+</div>
+<div class="container-fluid align-items-center bg-primary" id="mainShops">
+    <div class="row justify-content-center text-center text-white">
+        <div class="col-6 col-md-12 mt-3">
+            <h1 class="mt-4 text-uppercase">Obsługujemy takie sklepy</h1>
+        </div>
+        <div class="col-12 mt-2">
+            <div class="star-line fade-in-fwd">——— ★ ———</div>
+        </div>
+        <div class="col-12 p-2 mt-2  text-wrap">
+            <h3 class="about">• MediaExpert.pl</h3>
+        </div>
+        <div class="col-12 p-2  text-wrap">
+            <h3 class="about">• MediaMarkt.pl</h3>
+        </div>
+        <div class="col-12 p-2  text-wrap">
+            <h3 class="about">• Morele.net</h3>
+        </div>
+        <div class="col-8 p-2 mt-4 mb-5 text-wrap">
+            <h3 class="about">Aplikacja jest w fazie wczesnej bety, dlatego nie obsługujemy dużej ilości sklepów,
+                stawiamy na jakość a nie na ilość, ale możemy Ci zagwarantować że z czasem będzie się tutaj pojawiać
+                coraz to większa baza sklepów.</h3>
+        </div>
+    </div>
+</div>
+<div class="container-fluid align-items-center">
+    <div class="row justify-content-center text-center text-black">
+        <div class="col-12 mt-3">
+            <h1 class="mt-4 text-uppercase main-text">Formularz kontaktowy</h1>
+        </div>
+        <div class="col-12 mt-2">
+            <div class="star-line fade-in-fwd">——— ★ ———</div>
+        </div>
+        <div class="col-8 mt-2">
+            <h3 class="about">Zdajemy sobie sprawę że aplikacja może posiadać błędy, dlatego prosimy jeśli tylko coś
+                znalazłeś niezwłocznie zgłoś go tutaj, obiecujemy rozwiązać go jak najszybciej !</h3>
+        </div>
+    </div>
+    <div class="row justify-content-center text-center">
+        <form action="#" method="post" class="col-6 mt-4 p-4 p-md-5 border rounded-3 mb-5 bg-light">
+            <div class="form-floating mb-3">
+                <input type="text" class="form-control" name="email" id="email" required>
+                <label for="email">Twój adres e-mail</label>
+            </div>
+            <div class="form-floating mb-3">
+                <textarea style="height: 10rem" class="form-control" name="password" id="textarea" required></textarea>
+                <label for="textarea">Opis problemu</label>
+            </div>
+            <button class="w-100 about-button btn btn-outline-dark" type="submit">Wyślij wiadomość</button>
+            <hr class="my-4">
+            <small class="text-muted">Odpowiedz na zgłoszenie po rozpatrzeniu otrzymasz na podany adres E-Mail.</small>
+        </form>
+    </div>
+</div>
+<div class="container-fluid align-items-center" id="mainFooter">
+    <div class="row">
+        <div class="col-12 p-3 text-center text-white">
+            <h4 class="about mt-3">Created by SaQie</h4>
+            <div>Icons made by <a href="https://www.flaticon.com/authors/roundicons" title="Roundicons">Roundicons</a>
+                from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+            <div>Animations made by <a href="http://animista.net" title="Roundicons">Animista.net</a></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

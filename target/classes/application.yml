@@ -1,0 +1,35 @@
+spring:
+  mail:
+    host: smtp.gmail.com
+    username: producttracker.owner@gmail.com
+    password: Haslo123!
+    port: 587
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  liquibase:
+    change-log: classpath:liquibase-changeLog.xml
+  datasource:
+    url: jdbc:postgresql://localhost:5432/product_tracker_db
+    username: postgres
+    password: admin
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database: postgresql
+    hibernate:
+      ddl-auto: none
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+app:
+  applicationAdress: http://www.localhost:8080
+  saveCooldownInMinutes: 1
+  activationTokenExpiredInMinutes: 15
+  refreshCooldownInMinutes: 1
+
+

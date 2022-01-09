@@ -1,0 +1,35 @@
+spring:
+  mail:
+    host: ---
+    username: ---
+    password: ---
+    port: ---
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  liquibase:
+    change-log: classpath:liquibase-changeLog.xml
+  datasource:
+    url: ---
+    username: ---
+    password: ---
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database: postgresql
+    hibernate:
+      ddl-auto: none
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+app:
+  applicationAdress: http://www.localhost:8080
+  saveCooldownInMinutes: 1
+  activationTokenExpiredInMinutes: 15
+  refreshCooldownInMinutes: 1
+
+

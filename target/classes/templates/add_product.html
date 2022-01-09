@@ -1,0 +1,126 @@
+<!doctype html>
+<html xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      xmlns="http://www.w3.org/1999/html" lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Tracker</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.min.js"></script>
+    <link href="../static/styles/style.css" th:href="@{/styles/style.css}" rel="stylesheet">
+    <link href="../static/styles/animation_styles.css" th:href="@{/styles/animation_styles.css}" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-primary">
+<nav class="navbar navbar-expand-lg" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand offset-1 text-uppercase slide-in-left" href="/">product_tracker</a>
+        <button class="navbar-toggler text-uppercase font-weight-bold text-white rounded bg-dark" type="button"
+                data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown"
+                aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav ms-auto me-3">
+                <li class="nav-item mx-0 mx-lg-1">
+                    <a class="nav-link py-3 px-0 px-lg-3 text-uppercase slide-in-right" href="/">O aplikacji</a>
+                </li>
+                <th:block sec:authorize="isAnonymous()">
+                    <li class="nav-item mx-0 mx-lg-1">
+                        <a class="nav-link py-3 px-0 px-lg-3 text-uppercase slide-in-right" href="/login">Logowanie</a>
+                    </li>
+                    <li class="nav-item mx-0 mx-lg-1">
+                        <a class="nav-link py-3 px-0 px-lg-3 text-uppercase slide-in-right"
+                           href="/register">Rejestracja</a>
+                    </li>
+                </th:block>
+                <th:block sec:authorize="isAuthenticated()">
+                    <li class="nav-item mx-0 mx-lg-1">
+                        <a class="nav-link py-3 px-0 px-lg-3 text-uppercase slide-in-right" href="/menu">Menu</a>
+                    </li>
+                    <li class="nav-item mx-0 mx-lg-1">
+                        <a class="nav-link py-3 px-0 px-lg-3 text-uppercase slide-in-right" href="/logout">Wyloguj
+                            się</a>
+                    </li>
+                </th:block>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container-fluid">
+    <div class="row justify-content-center text-center align-items-center fade-in">
+        <div class="col-lg-5 col-8 mt-xl-5 mt-md-3 mt-3 mb-3 p-4 border bg-light rounded-3">
+            <div class="col-12 mb-2"><img src="https://i.imgur.com/DS5DOjI.png" width="90" height="90"></div>
+            <h1 class="add-product-header-text">Nowy produkt</h1>
+            <div class="error-form" style="font-size: 13px" th:if="${#fields.hasErrors('newProductDto.name')}" th:errors="${newProductDto.name}"></div>
+            <div class="error-form" style="font-size: 13px" th:if="${#fields.hasErrors('newProductDto.links')}" th:errors="${newProductDto.links}"></div>
+            <div class="error-form" style="font-size: 13px" th:if="${error != null}" th:text="${error}"></div>
+            <div class="text-success fw-bold" style="font-size: 13px" th:if="${saveSuccess != null}" th:text="${saveSuccess}"></div>
+            <i id="sumbit-button-wait" style="display: none; font-size: 35px" class="fa fa-spinner fa-spin mt-4 fw-bold"></i>
+            <hr>
+            <div class="col-12">
+                <form th:action="@{/new_product}" method="post" id="productForm" name="productForm">
+                    <div class="form-group">
+                        <span id="textHelpBlock1" class="form-text text-muted">Wprowadz ogólną nazwe produktu</span>
+                        <div class="input-group">
+                            <input id="text1" placeholder="Zegarek sportowy" type="text"
+                                   aria-describedby="textHelpBlock2" class="mb-2 mt-2 form-control"
+                                   th:field="${newProductDto.name}">
+                        </div>
+                        <span id="textHelpBlock2" class="form-text text-muted">Wprowadz krótki opis produktu</span>
+                        <div class="input-group">
+                            <input id="text2" placeholder="Mój wymarzony Iphone.." type="text"
+                                   aria-describedby="textHelpBlock2" class="mb-2 mt-2 form-control"
+                                   th:field="${newProductDto.description}">
+                        </div>
+                        <span id="textHelpBlock3"
+                              class="form-text text-muted">Wprowadz linki do produktu</span>
+                        <div class="input-group">
+                            <input id="text3" placeholder="www.example.com" type="text"
+                                   aria-describedby="textHelpBlock3" class="mb-2 mt-2 form-control"
+                                   th:field="${newProductDto.links}">
+                        </div>
+                        <details class="details-class fade-in">
+                            <summary class="fade-in text-muted" data-open="Schowaj" data-close="Pokaż kolejne pole wprowadzania"></summary>
+                            <div class="input-group fade-in">
+                                <input id="text4" placeholder="www.example.com" type="text"
+                                       aria-describedby="textHelpBlock4" class="mb-2 mt-2 form-control fade-in"
+                                       th:field="${newProductDto.links}">
+                            </div>
+                            <details class="details-class fade-in">
+                                <summary class="fade-in text-muted" data-open="Schowaj" data-close="Pokaż kolejne pole wprowadzania"></summary>
+                                <div class="input-group">
+                                    <input id="text5" placeholder="www.example.com" type="text"
+                                           aria-describedby="textHelpBlock4" class="mb-2 mt-2 form-control fade-in"
+                                           th:field="${newProductDto.links}">
+                                </div>
+                            </details>
+                        </details>
+                        <hr>
+                        <details class="details-class fade-in mt-2">
+                            <summary class="fade-in text-muted" data-open="Schowaj" data-close="Instrukcja"></summary>
+                                <div class="col-12 text-muted"><span style="color:green; font-weight: bold">-></span> Wprowadzaj tylko pełne linki do produktów</div>
+                                <div class="col-12 text-muted"><span style="color:green; font-weight: bold">-></span> Wymagany jest chociaż jeden poprawny link aby dodać produkt</div>
+                                <div class="col-12 text-muted"><span style="color:green; font-weight: bold">-></span> Nazwa produktu musi się pokrywać z tymi na stronie</div>
+                                <div class="col-12 text-muted"><span style="color:green; font-weight: bold">-></span> Opis produktu jest opcjonalny, nie musisz go podawać</div>
+                                <div class="col-12 text-muted"><span style="color:green; font-weight: bold">-></span> Produkt możesz dodawać z ograniczeniem czasowym</div>
+                        </details>
+                    </div>
+                    <div class="form-group">
+                        <button id="submit-button" type="submit" class="col-12 fw-bold btn btn-outline-dark mt-4 button-load">Dodaj nowy produkt</button>
+                    </div>
+                    <div class="form-group">
+                        <button type="reset" class="col-12 fw-bold btn btn-outline-dark mt-4 button-load">Wyczyść pola wprowadzania</button>
+                    </div>
+                </form>
+                <a href="/menu">
+                    <button class="col-12 fw-bold btn btn-outline-dark mt-4">Wróć do menu</button>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
